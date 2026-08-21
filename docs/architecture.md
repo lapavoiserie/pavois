@@ -73,7 +73,8 @@ platform's build system through five link channels.
 which machines and surfaces exist *here and now* (a replicated registry),
 how to reach them (an opaque, encrypted, agent-relayed channel), who may
 (Ed25519 identities and enrollment), and fluidity — content that follows
-surfaces as they come and go. Pavois rides it for the `Companion` role: nui
+surfaces as they come and go. Pavois rides it for the `Companion` role — a
+corner that stays off until a build asks for it (`-D mui_cafos`): nui
 snapshots over the opaque channel, rendered by any backend's `NodeRenderer`
 on the far side. cafos keeps its own identity and roadmap; to Pavois it is
 what kui is for platform capabilities — the substrate underneath.
