@@ -26,9 +26,11 @@ effect, projecting snapshots over the network. An iOS/Android widget is
 Applications declare *roles* (`Glance`, `Commands`, `Preferences`,
 `Auxiliary`, `Companion`…), never native surfaces — a cover, a widget and a
 live tile are the same role wearing different clothes. Each backend maps the
-roles its platform has; the rest are silent no-ops. Cardinality is the
-host's answer: one cover per app on Sailfish, as many extra windows as you
-declare on Windows.
+roles its platform has, and states them where the compiler can read them
+(`@:hostedRoles`): declaring a role your target cannot host stops the build,
+naming both, and accepting the gap is an explicit `@:surface(Role, optional)`
+in your own source. Cardinality is the host's answer: one cover per app on
+Sailfish, as many extra windows as you declare on Windows.
 
 ## The lifecycle every host implements
 

@@ -6,8 +6,8 @@ extra windows, a panel on the machine across the room. Pavois calls each of
 those an **app surface**, and it is built on one idea:
 
 > **Declare a surface once, in the shared vocabulary. Every platform mounts
-> it on what it actually has — and what it does not have degrades to a
-> silent no-op, never an error.**
+> it on what it actually has — and where a platform has nothing to mount it
+> on, the build says so, at the declaration, naming the platform.**
 
 ```haxe
 class TodoApp extends mui.App {
@@ -38,6 +38,16 @@ rendered there, its buttons running *your* closures back home.
 Reading `@:state` inside a surface keeps it live. That is the whole
 reactivity contract, and it holds identically for a window, a cover and a
 panel on the other side of the network.
+
+Portable does not mean silent. Each backend states the roles it hosts, and a
+declaration with no host on the target you are building **stops that build**,
+naming the role and the backend — because what a compiler can know, a
+compiler should say. Accepting a gap is then a line in your own source:
+
+```haxe
+@:surface(Glance, optional)     // the Sailfish cover — and this app accepts
+function today():View { … }     // that it flies nowhere on the others
+```
 
 ## En grand pavois
 
