@@ -46,6 +46,11 @@ back — and the network generalizes the same machine: a cafos surface's
 
 ## The detached wire
 
+The whole detached-over-network corner is opt-in: a build that has not set
+`-D mui_cafos` cannot even declare a `Companion`. Pavois is a way to write
+native applications *and* a way to let their surfaces live on other machines,
+and the second never arrives by default with the first.
+
 A live tree cannot leave the process — its props carry closures. Crossing a
 boundary means the [snapshot contract](https://lapavoiserie.github.io/nui/#/snapshot):
 the tree as pure JSON-safe data, every closure replaced by an action id that

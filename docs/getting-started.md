@@ -16,17 +16,27 @@ binding.
 
 ## A companion surface
 
-With a cafos agent running on the machine
+The networked corner is **off by default** — a Companion is served to other
+machines, and no application gets that without asking. Ask in the build file:
+
+```hxml
+-D mui_cafos
+```
+
+Then, with a cafos agent running on the machine
 ([cafos GUIDE](https://github.com/lapavoiserie/cafos)):
 
 ```haxe
 @:surface(Companion)
 function panel():View { … }
 
-// in main(), after construction:
+// in main(), after construction — the second deliberate act:
 var projector = cafos.mui.CompanionServe.serve(app);
 app.lifetime.own(() -> projector.stop());
 ```
+
+Without the define the declaration does not compile, and the refusal says
+what to add: the framework never opens the network on your behalf.
 
 Any machine serving a surface with that id renders the panel and sends taps
 back. The sink side is a few lines around `cafos.nui.NuiSink` +
