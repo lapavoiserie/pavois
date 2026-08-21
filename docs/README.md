@@ -42,8 +42,8 @@ panel on the other side of the network.
 ## En grand pavois
 
 *Pavoiser* is to dress a ship with flags. Your surfaces are the flags; the
-machines around you are the masts. (The hoist on this site's cover is the
-real thing: the six International Code of Signals flags that spell
+machines around you are the masts. (The miniature hoist beside the wordmark
+is the real thing: the six International Code of Signals flags that spell
 P·A·V·O·I·S — Papa leading, the Blue Peter, "about to sail".) An application with every declared surface
 flying — window here, cover there, panel across the room — is *en grand
 pavois*. The framework's job is to make hoisting them one line each, and to

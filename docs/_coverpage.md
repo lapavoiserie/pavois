@@ -1,54 +1,77 @@
 <div class="hoist" aria-hidden="true">
-<svg viewBox="0 0 640 118" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The six international code flags spelling PAVOIS, hoisted on a dressing line">
-  <!-- the dressing line -->
-  <path d="M8 30 Q 320 8 632 30" fill="none" stroke="#5a6a7e" stroke-width="1.5"/>
-  <!-- Geometry is the ICS chart's own: square flags; Papa/Sierra inner
-       square one third; Alfa notch to three quarters; Victor saltire
-       17.5% of the side; India roundel a quarter; Oscar per bend,
-       red upper fly, yellow lower hoist. -->
-  <!-- P · Papa -->
-  <g transform="translate(46 26) rotate(-1.6)">
-    <line x1="26" y1="-8" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
-    <rect width="52" height="52" fill="#1B4B8F"/>
-    <rect x="17.33" y="17.33" width="17.34" height="17.34" fill="#f4f7fb"/>
-    <text x="26" y="70" text-anchor="middle" class="hoist-letter">P</text>
+<svg viewBox="0 0 660 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six surfaces hoisted on a dressing line — a main window, a cover, a menu, a settings pane, an extra window and a remote panel — all flown by one application">
+  <path d="M8 26 Q 330 6 652 26" fill="none" stroke="#5a6a7e" stroke-width="1.5"/>
+  <!-- the main window · @:surface is implicit, body() everywhere -->
+  <g transform="translate(22 33) rotate(-1.4)">
+    <line x1="36" y1="-10" x2="36" y2="0" stroke="#5a6a7e" stroke-width="1"/>
+    <rect width="72" height="52" fill="#f4f7fb"/>
+    <rect width="72" height="11" fill="#1B4B8F"/>
+    <circle cx="7" cy="5.5" r="1.7" fill="#f4f7fb" opacity=".75"/>
+    <circle cx="13.5" cy="5.5" r="1.7" fill="#f4f7fb" opacity=".55"/>
+    <circle cx="20" cy="5.5" r="1.7" fill="#f4f7fb" opacity=".4"/>
+    <rect x="8" y="20" width="46" height="3.4" fill="#9fb0c6"/>
+    <rect x="8" y="29" width="56" height="3.4" fill="#9fb0c6"/>
+    <rect x="8" y="38" width="32" height="3.4" fill="#9fb0c6"/>
   </g>
-  <!-- A · Alfa (swallowtail) -->
-  <g transform="translate(142 21) rotate(1.2)">
-    <line x1="26" y1="-7" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
-    <polygon points="0,0 52,0 39,26 52,52 0,52" fill="#f4f7fb"/>
-    <polygon points="26,0 52,0 39,26 52,52 26,52" fill="#1B4B8F"/>
-    <text x="26" y="70" text-anchor="middle" class="hoist-letter">A</text>
+  <!-- the cover: a live tile on the task switcher -->
+  <g transform="translate(128 29) rotate(1.1)">
+    <line x1="36" y1="-10" x2="36" y2="0" stroke="#5a6a7e" stroke-width="1"/>
+    <rect x="10" width="52" height="52" rx="6" fill="#f4f7fb"/>
+    <text x="36" y="30" text-anchor="middle" class="hoist-glance">3</text>
+    <rect x="21" y="37" width="30" height="3.4" fill="#9fb0c6"/>
   </g>
-  <!-- V · Victor (red saltire) -->
-  <g transform="translate(238 25) rotate(-0.8)">
-    <line x1="26" y1="-9" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
-    <clipPath id="victor"><rect width="52" height="52"/></clipPath>
-    <rect width="52" height="52" fill="#f4f7fb"/>
-    <path d="M0 0 L52 52 M52 0 L0 52" stroke="#C8102E" stroke-width="9.1" clip-path="url(#victor)"/>
-    <text x="26" y="70" text-anchor="middle" class="hoist-letter">V</text>
+  <!-- the menu bar / command set -->
+  <g transform="translate(234 26) rotate(-0.7)">
+    <line x1="36" y1="-10" x2="36" y2="0" stroke="#5a6a7e" stroke-width="1"/>
+    <rect width="72" height="52" fill="#f4f7fb"/>
+    <rect x="6" y="4" width="11" height="3.4" fill="#1B4B8F"/>
+    <rect x="22" y="4" width="13" height="3.4" fill="#1B4B8F"/>
+    <rect x="40" y="4" width="9" height="3.4" fill="#1B4B8F"/>
+    <rect x="20" y="13" width="38" height="30" fill="#ffffff" stroke="#b8c2cc" stroke-width=".8"/>
+    <rect x="20" y="13" width="38" height="9" fill="#1B4B8F"/>
+    <rect x="25" y="16.5" width="18" height="2.6" fill="#f4f7fb"/>
+    <rect x="25" y="27" width="22" height="2.6" fill="#9fb0c6"/>
+    <rect x="25" y="34" width="14" height="2.6" fill="#9fb0c6"/>
   </g>
-  <!-- O · Oscar (per bend: red upper fly, yellow lower hoist) -->
-  <g transform="translate(334 21) rotate(1.5)">
-    <line x1="26" y1="-7" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
-    <rect width="52" height="52" fill="#C8102E"/>
-    <polygon points="0,0 0,52 52,52" fill="#EBB410"/>
-    <text x="26" y="70" text-anchor="middle" class="hoist-letter">O</text>
+  <!-- the settings pane -->
+  <g transform="translate(340 26) rotate(1.3)">
+    <line x1="36" y1="-10" x2="36" y2="0" stroke="#5a6a7e" stroke-width="1"/>
+    <rect width="72" height="52" fill="#f4f7fb"/>
+    <rect x="8" y="14" width="26" height="3.4" fill="#9fb0c6"/>
+    <rect x="47" y="11" width="18" height="9.6" rx="4.8" fill="#1B4B8F"/>
+    <circle cx="60.2" cy="15.8" r="3.3" fill="#f4f7fb"/>
+    <rect x="8" y="32" width="19" height="3.4" fill="#9fb0c6"/>
+    <rect x="47" y="29" width="18" height="9.6" rx="4.8" fill="#cdd6e0"/>
+    <circle cx="51.8" cy="33.8" r="3.3" fill="#f4f7fb"/>
   </g>
-  <!-- I · India (black roundel on yellow) -->
-  <g transform="translate(430 26) rotate(-1.2)">
-    <line x1="26" y1="-10" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
-    <rect width="52" height="52" fill="#EBB410"/>
-    <circle cx="26" cy="26" r="13" fill="#0d1523"/>
-    <text x="26" y="70" text-anchor="middle" class="hoist-letter">I</text>
+  <!-- a second window of our own -->
+  <g transform="translate(446 28) rotate(-1.1)">
+    <line x1="36" y1="-10" x2="36" y2="0" stroke="#5a6a7e" stroke-width="1"/>
+    <rect y="3" width="54" height="42" fill="#dbe3ec"/>
+    <rect y="3" width="54" height="8" fill="#7FA8D9"/>
+    <rect x="15" y="12" width="57" height="40" fill="#f4f7fb"/>
+    <rect x="15" y="12" width="57" height="9" fill="#1B4B8F"/>
+    <rect x="22" y="28" width="40" height="3.2" fill="#9fb0c6"/>
+    <rect x="22" y="36" width="27" height="3.2" fill="#9fb0c6"/>
   </g>
-  <!-- S · Sierra -->
-  <g transform="translate(526 22) rotate(0.9)">
-    <line x1="26" y1="-8" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
-    <rect width="52" height="52" fill="#f4f7fb"/>
-    <rect x="17.33" y="17.33" width="17.34" height="17.34" fill="#1B4B8F"/>
-    <text x="26" y="70" text-anchor="middle" class="hoist-letter">S</text>
+  <!-- a panel on a machine across the room -->
+  <g transform="translate(552 32) rotate(0.8)">
+    <line x1="36" y1="-10" x2="36" y2="0" stroke="#5a6a7e" stroke-width="1"/>
+    <path d="M-8 26 H 14" stroke="#EBB410" stroke-width="1.6" stroke-dasharray="3 2.4"/>
+    <circle cx="-8" cy="26" r="2.4" fill="#EBB410"/>
+    <rect x="14" width="58" height="52" fill="#f4f7fb"/>
+    <rect x="14" width="58" height="9" fill="#1B4B8F"/>
+    <rect x="21" y="18" width="34" height="3.2" fill="#9fb0c6"/>
+    <rect x="21" y="26" width="24" height="3.2" fill="#9fb0c6"/>
+    <rect x="21" y="35" width="24" height="10" rx="2" fill="#EBB410"/>
   </g>
+  <!-- labels share one baseline: they belong to the plate, not to the flag -->
+  <text x="58" y="104" text-anchor="middle" class="hoist-label">window</text>
+  <text x="164" y="104" text-anchor="middle" class="hoist-label">cover</text>
+  <text x="270" y="104" text-anchor="middle" class="hoist-label">menu</text>
+  <text x="376" y="104" text-anchor="middle" class="hoist-label">settings</text>
+  <text x="482" y="104" text-anchor="middle" class="hoist-label">extra window</text>
+  <text x="588" y="104" text-anchor="middle" class="hoist-label">remote panel</text>
 </svg>
 </div>
 
@@ -56,9 +79,9 @@
 
 > Every surface, every mast.
 
-<p class="cover-lede">Write an application once, in one vocabulary. It runs
-native on six platforms — and its surfaces live wherever your network has
-room for them.</p>
+<p class="cover-lede">One application, written once in one vocabulary. It runs
+native on six platforms — and every surface it declares flies wherever your
+machines have room for it.</p>
 
 <div class="signal-grid">
   <div><b>One vocabulary</b><span>views · <code>@:state</code> · <code>@:surface</code> declarations</span></div>

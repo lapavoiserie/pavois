@@ -208,19 +208,33 @@
     section.cover {
       background: linear-gradient(180deg, #091120 0%, #0d1b31 55%, #12274a 100%) !important;
       color: #c9d6e6;
+      /* docsify pins the cover to 100vh and clips the overflow, which ate the
+         hoist on a phone. Let it grow and scroll instead. */
+      height: auto;
+      min-height: 100vh;
+      padding: 5vh 0 7vh;
+      /* centring by align-items puts overflow above the scroll origin, where
+         it can never be reached; auto margins centre and stay reachable. */
+      align-items: flex-start;
     }
     section.cover .cover-main {
       color: #c9d6e6;
       max-width: 720px;
-      margin: 0 auto;
+      margin: auto;
       padding: 0 24px;
     }
     .hoist { margin-bottom: .5rem; }
-    .hoist svg { width: min(560px, 92%); height: auto; }
-    .hoist-letter {
+    .hoist svg { width: min(690px, 94%); height: auto; }
+    .hoist-label {
       font-family: 'IBM Plex Mono', ui-monospace, monospace;
-      font-size: 11px; font-weight: 600;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: .04em;
       fill: #8fb4e3;
+    }
+    .hoist-glance {
+      font-family: 'Besley', Georgia, serif;
+      font-size: 22px; font-weight: 800;
+      fill: #1B4B8F;
     }
     section.cover h1 {
       color: #f4f7fb;
@@ -296,6 +310,14 @@
     }
     section.cover .cover-main > p:last-of-type a:first-child:hover { border-color: #c9d6e6 !important; }
     section.cover .mask { display: none; }
+
+    @media (max-width: 640px) {
+      .signal-grid { grid-template-columns: 1fr; }
+      .signal-grid > div { padding: .65rem .9rem .7rem; }
+      .signal-grid span { font-size: .86rem; }
+      .cover-lede { font-size: .98rem; margin-bottom: 1.2rem; }
+      section.cover blockquote p { font-size: 1.1rem; }
+    }
 
     @media (prefers-reduced-motion: no-preference) {
       .hoist svg { animation: sway 7s ease-in-out infinite alternate; transform-origin: 50% 0; }
