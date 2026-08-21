@@ -1,43 +1,53 @@
 <div class="hoist" aria-hidden="true">
-<svg viewBox="0 0 640 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six international signal flags spelling PAVOIS, hoisted on a dressing line">
+<svg viewBox="0 0 640 118" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The six international code flags spelling PAVOIS, hoisted on a dressing line">
   <!-- the dressing line -->
-  <path d="M8 30 Q 320 6 632 30" fill="none" stroke="#5a6a7e" stroke-width="1.5"/>
-  <!-- P · Blue Peter -->
-  <g transform="translate(40 28) rotate(-1.6)">
-    <line x1="32" y1="-9" x2="32" y2="2" stroke="#5a6a7e" stroke-width="1"/>
-    <rect width="64" height="48" fill="#1B4B8F"/>
-    <rect x="18" y="13.5" width="28" height="21" fill="#f4f7fb"/>
+  <path d="M8 30 Q 320 8 632 30" fill="none" stroke="#5a6a7e" stroke-width="1.5"/>
+  <!-- Geometry is the ICS chart's own: square flags; Papa/Sierra inner
+       square one third; Alfa notch to three quarters; Victor saltire
+       17.5% of the side; India roundel a quarter; Oscar per bend,
+       red upper fly, yellow lower hoist. -->
+  <!-- P · Papa -->
+  <g transform="translate(46 26) rotate(-1.6)">
+    <line x1="26" y1="-8" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
+    <rect width="52" height="52" fill="#1B4B8F"/>
+    <rect x="17.33" y="17.33" width="17.34" height="17.34" fill="#f4f7fb"/>
+    <text x="26" y="70" text-anchor="middle" class="hoist-letter">P</text>
   </g>
   <!-- A · Alfa (swallowtail) -->
-  <g transform="translate(136 22) rotate(1.2)">
-    <line x1="32" y1="-8" x2="32" y2="2" stroke="#5a6a7e" stroke-width="1"/>
-    <polygon points="0,0 32,0 32,48 0,48" fill="#f4f7fb"/>
-    <polygon points="32,0 64,0 50,24 64,48 32,48" fill="#1B4B8F"/>
+  <g transform="translate(142 21) rotate(1.2)">
+    <line x1="26" y1="-7" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
+    <polygon points="0,0 52,0 39,26 52,52 0,52" fill="#f4f7fb"/>
+    <polygon points="26,0 52,0 39,26 52,52 26,52" fill="#1B4B8F"/>
+    <text x="26" y="70" text-anchor="middle" class="hoist-letter">A</text>
   </g>
   <!-- V · Victor (red saltire) -->
-  <g transform="translate(232 26) rotate(-0.8)">
-    <line x1="32" y1="-10" x2="32" y2="2" stroke="#5a6a7e" stroke-width="1"/>
-    <clipPath id="victor"><rect width="64" height="48"/></clipPath>
-    <rect width="64" height="48" fill="#f4f7fb"/>
-    <path d="M0 0 L64 48 M64 0 L0 48" stroke="#C8102E" stroke-width="11" clip-path="url(#victor)"/>
+  <g transform="translate(238 25) rotate(-0.8)">
+    <line x1="26" y1="-9" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
+    <clipPath id="victor"><rect width="52" height="52"/></clipPath>
+    <rect width="52" height="52" fill="#f4f7fb"/>
+    <path d="M0 0 L52 52 M52 0 L0 52" stroke="#C8102E" stroke-width="9.1" clip-path="url(#victor)"/>
+    <text x="26" y="70" text-anchor="middle" class="hoist-letter">V</text>
   </g>
-  <!-- O · Oscar (red over yellow, diagonal) -->
-  <g transform="translate(328 22) rotate(1.5)">
-    <line x1="32" y1="-8" x2="32" y2="2" stroke="#5a6a7e" stroke-width="1"/>
-    <polygon points="0,0 64,0 0,48" fill="#C8102E"/>
-    <polygon points="64,0 64,48 0,48" fill="#EBB410"/>
+  <!-- O · Oscar (per bend: red upper fly, yellow lower hoist) -->
+  <g transform="translate(334 21) rotate(1.5)">
+    <line x1="26" y1="-7" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
+    <rect width="52" height="52" fill="#C8102E"/>
+    <polygon points="0,0 0,52 52,52" fill="#EBB410"/>
+    <text x="26" y="70" text-anchor="middle" class="hoist-letter">O</text>
   </g>
   <!-- I · India (black roundel on yellow) -->
-  <g transform="translate(424 27) rotate(-1.2)">
-    <line x1="32" y1="-11" x2="32" y2="2" stroke="#5a6a7e" stroke-width="1"/>
-    <rect width="64" height="48" fill="#EBB410"/>
-    <circle cx="32" cy="24" r="11" fill="#0d1523"/>
+  <g transform="translate(430 26) rotate(-1.2)">
+    <line x1="26" y1="-10" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
+    <rect width="52" height="52" fill="#EBB410"/>
+    <circle cx="26" cy="26" r="13" fill="#0d1523"/>
+    <text x="26" y="70" text-anchor="middle" class="hoist-letter">I</text>
   </g>
   <!-- S · Sierra -->
-  <g transform="translate(520 23) rotate(0.9)">
-    <line x1="32" y1="-9" x2="32" y2="2" stroke="#5a6a7e" stroke-width="1"/>
-    <rect width="64" height="48" fill="#f4f7fb"/>
-    <rect x="18" y="13.5" width="28" height="21" fill="#1B4B8F"/>
+  <g transform="translate(526 22) rotate(0.9)">
+    <line x1="26" y1="-8" x2="26" y2="1" stroke="#5a6a7e" stroke-width="1"/>
+    <rect width="52" height="52" fill="#f4f7fb"/>
+    <rect x="17.33" y="17.33" width="17.34" height="17.34" fill="#1B4B8F"/>
+    <text x="26" y="70" text-anchor="middle" class="hoist-letter">S</text>
   </g>
 </svg>
 </div>
