@@ -1,0 +1,4 @@
+- [The story](README.md)
+- [Architecture](architecture.md)
+- [Surfaces](surfaces.md)
+- [Getting started](getting-started.md)
