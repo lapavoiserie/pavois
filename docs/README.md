@@ -65,11 +65,12 @@ strike them cleanly when a mast disappears.
 |---|---|
 | Main window | every backend |
 | Cover (Glance) | Sailfish — live-mounted, survives recreation |
+| Widget (Glance) | Android — an App Widget, sampled; its buttons run your closures |
 | Menu / commands | macOS menu bar (⌘-shortcuts), Windows MenuBar, terminal bindings |
 | Settings (Preferences) | macOS Settings scene (⌘,) |
 | Extra windows (Auxiliary) | Windows, macOS — one per declaration |
 | Remote panel (Companion) | any machine on the cafos network, served from any backend |
-| Widgets (Glance on iOS/Android) | next — the snapshot chantier |
+| Widgets on iOS (Glance) | next — WidgetKit, same sampling contract |
 
 Start with [Architecture](architecture.md) for how the pieces fit, or
 [Getting started](getting-started.md) to build something.

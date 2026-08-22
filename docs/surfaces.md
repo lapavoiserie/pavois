@@ -18,8 +18,12 @@ A surface is a corner of a cube:
 The main window, the Sailfish cover, a macOS Settings pane and an extra
 window all share the **live co-resident** corner: one effect per surface over
 one shared signal graph. A Companion panel is **live detached**: the same
-effect, projecting snapshots over the network. An iOS/Android widget is
-**snapshot detached** — the corner still to build.
+effect, projecting snapshots over the network. An Android widget is
+**snapshot detached**, and that corner is now built: the surface is *sampled*
+into the same pure data a Companion frame carries, the launcher stores the
+picture — so it outlives the process that drew it — and a tap on it comes back
+as an action id that resolves to the closure it named. iOS (WidgetKit) is
+next, on the same contract.
 
 ## Roles, not native surfaces
 
