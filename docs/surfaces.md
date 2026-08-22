@@ -25,6 +25,26 @@ picture — so it outlives the process that drew it — and a tap on it comes ba
 as an action id that resolves to the closure it named. iOS (WidgetKit) is
 next, on the same contract.
 
+### Who decides when a snapshot is taken
+
+That is the one question the live corner never has to ask. A live surface
+reconciles itself; a sampled one is drawn when the *system* decides, which on
+a home screen means once, at binding, and then never again on its own. So the
+application gets a way to say *now* — one sentence, said the same to every
+host:
+
+```haxe
+mui.surface.Resample.request(Glance);
+```
+
+Android pushes a fresh picture into the widget's state, WidgetKit calls
+`reloadTimelines`, a self-drawn painter repaints. And on a backend that hosts
+no such surface the call **is not compiled at all** — which is not a silence,
+because the declaration itself could not have compiled there without saying
+`optional`, the line where the application accepted that this surface flies
+nowhere on that target. One application, four builds, one sentence that means
+exactly what it can mean on each.
+
 ## Roles, not native surfaces
 
 Applications declare *roles* (`Glance`, `Commands`, `Preferences`,
