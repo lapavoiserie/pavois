@@ -29,21 +29,26 @@ next, on the same contract.
 
 That is the one question the live corner never has to ask. A live surface
 reconciles itself; a sampled one is drawn when the *system* decides, which on
-a home screen means once, at binding, and then never again on its own. So the
-application gets a way to say *now* — one sentence, said the same to every
-host:
+a home screen means once, at binding, and then never again on its own.
+
+The application says nothing at all. A snapshot surface follows its own state:
+its declaration is evaluated inside an effect, so every cell the tree reads
+subscribes it, and a write re-samples and republishes.
 
 ```haxe
-mui.surface.Resample.request(Glance);
+new Button("-", function() count.set(count.get() - 1)),   // the widget follows
 ```
 
 Android pushes a fresh picture into the widget's state, WidgetKit calls
-`reloadTimelines`, a self-drawn painter repaints. And on a backend that hosts
-no such surface the call **is not compiled at all** — which is not a silence,
-because the declaration itself could not have compiled there without saying
-`optional`, the line where the application accepted that this surface flies
-nowhere on that target. One application, four builds, one sentence that means
-exactly what it can mean on each.
+`reloadTimelines`, a self-drawn painter repaints — each host under its own
+name, none of them the application's business.
+
+There used to be a sentence here — `Resample.request(Glance)`, said once to
+every host. It read well and it did not work: a guarantee that depends on
+remembering is not a guarantee, and the counter example proved it by calling
+it from `+` and not from `-`, leaving the widget showing a number nobody had.
+Nothing that could have said so existed. What the framework knows is what the
+thunk read, which is the whole answer.
 
 ## Roles, not native surfaces
 
