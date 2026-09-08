@@ -348,7 +348,7 @@ count.peek();      <span class="cm">// untracked read — inside an effect, no s
     <h3>What an application actually uses</h3>
     <p>Four things, and none requires reading <code>rui</code>'s documentation:</p>
     <ul>
-      <li><code>@:state var count:Int = 0</code> — an observable cell; <code>count.get()</code> in a view subscribes it, <code>count.set()</code> re-runs it. Add <code>(durable)</code> to keep it across processes;</li>
+      <li><code>@:state var count:Int = 0</code> — an observable cell behind a property: reading <code>count</code> in a view subscribes it, writing <code>count = …</code> re-runs it; <code>count_</code> is the cell itself, for a control that binds. Add <code>(durable)</code> to keep it across processes;</li>
       <li><code>body():View</code> — the main window, always;</li>
       <li><code>@:surface(Role)</code> — every other surface: a cover, a menu, a settings pane, a panel on another machine;</li>
       <li><code>lifetime.own(…)</code> — anything long-lived, undone when the application is over.</li>
@@ -463,7 +463,7 @@ haxelib dev aui ~/new-projects/aui        <span class="cm"># and sui, cui, wui, 
 
     <h2 id="glossary">14 · Glossary</h2>
     <dl class="gloss">
-      <dt>cell</dt><dd>One <code>@:state</code> field, holding one value: a <code>rui.state.State&lt;T&gt;</code> — a signal with <code>get</code>/<code>set</code>/<code>peek</code>, a platform sink and optionally a durable sink. The unit a view subscribes to, a write notifies, and a durable key persists. Not a record, not a variable, not a node.</dd>
+      <dt>cell</dt><dd>One <code>@:state</code> field, holding one value: a <code>rui.state.State&lt;T&gt;</code> — a signal with <code>get</code>/<code>set</code>/<code>peek</code>, a platform sink and optionally a durable sink. The field itself is a property over it (<code>count</code> reads, <code>count = v</code> writes); the cell is reachable as <code>count_</code>. The unit a view subscribes to, a write notifies, and a durable key persists. Not a record, not a variable, not a node.</dd>
       <dt>surface</dt><dd>One thing an application can put on screen, declared by role. The main window is one; a cover, a menu, a panel on another machine are others.</dd>
       <dt>role</dt><dd>What a surface is for — Primary, Glance, Preferences, Commands, Auxiliary, Companion, Notification — never the native surface's name.</dd>
       <dt>live / snapshot</dt><dd>A live surface is an effect that reconciles; a snapshot surface is a picture somebody else draws when they decide, kept current by <code>nui.Follow</code>.</dd>
@@ -577,7 +577,7 @@ haxelib dev aui ~/new-projects/aui        <span class="cm"># and sui, cui, wui, 
     local: [
       { where: "Compose · aui", t: "The finger lands", p: "Compose's own <code>Button</code> fires <code>onClick</code>. It holds an opaque handle to the Haxe node — <code>java.lang.Object</code> — and asks the bridge to run its action." },
       { where: "aui.nui.ViewSource", t: "One gesture, one render", p: "<code>invokeAction</code> opens <code>rui.Signal.Scheduler.batch</code>. Whatever the closure writes, each effect that reads it will run once, when the gesture is over." },
-      { where: "your closure", t: "Your code runs", p: "<code>count.set(count.get() + 1)</code>. Nothing about this line knows it was reached from Compose, a terminal, or a watch." },
+      { where: "your closure", t: "Your code runs", p: "<code>count += 1</code>. Nothing about this line knows it was reached from Compose, a terminal, or a watch." },
       { where: "rui.state.State", t: "The write, in two halves", p: "The <strong>platform sink</strong> is called immediately — <code>StateBridge.write</code> sets the Compose <code>MutableState</code> behind the cell. The <strong>effects</strong> that read the cell are queued, not run: the batch is still open." },
       { where: "rui.Scheduler", t: "The batch closes", p: "Every queued effect runs once. If this app declares a snapshot surface — a widget, a Companion — its <code>nui.Follow</code> effect is one of them: it re-samples the tree and republishes." },
       { where: "Compose", t: "Recomposition", p: "The composable that read <code>count</code> through the Compose state recomposes. Not the screen — that one node. This is what \"Compose follows the Haxe reads\" means." }
@@ -587,7 +587,7 @@ haxelib dev aui ~/new-projects/aui        <span class="cm"># and sui, cui, wui, 
       { where: "dui.nui.Reception", t: "An id goes home", p: "The inflated closure sends <code>{action: 7}</code> back the way the frame came — here, a Data Layer message on <code>/dui/action</code>, wrapped with the surface name because one watch may carry several." },
       { where: "kui-wear · phone", t: "Delivered, even if the app was not on screen", p: "The in-process listener takes it if the app is running; the manifest-declared <code>WearableListenerService</code> takes it otherwise, starting the process if needed. Both go through one <code>requestId</code> guard — delivered twice, a <code>+10</code> counted 20." },
       { where: "dui.nui.Projection", t: "The id resolves against a table it never saw built", p: "<code>follower.invoke(7)</code>. Ids are keyed by <em>place</em>, and the table was never cleared between generations, so a tap that raced a fresh frame still runs the current closure of the button in that slot." },
-      { where: "your closure, on the phone", t: "Your code runs — where the state lives", p: "Inside a batch, exactly as a local tap. <code>count.set(count.get() + 10)</code>. The state never left the phone; the watch only ever held a picture." },
+      { where: "your closure, on the phone", t: "Your code runs — where the state lives", p: "Inside a batch, exactly as a local tap. <code>count += 10</code>. The state never left the phone; the watch only ever held a picture." },
       { where: "nui.Follow", t: "The write republishes", p: "The platform sink updates the phone's own screen immediately. When the batch closes, the follower's effect wakes — it read <code>count</code> while sampling — projects a new snapshot, and <code>Projection</code> sends <code>{gen: 15, tree}</code>." },
       { where: "watch", t: "A new picture", p: "<code>Reception.frame</code> inflates it, <code>SelfSource.rebuild</code> swaps the tree, and a <code>@:state</code> generation cell the thunk reads is bumped — because Compose only recomposes on a cell it saw read. The number changes." }
     ]
