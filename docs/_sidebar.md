@@ -2,3 +2,4 @@
 - [Architecture](architecture.md)
 - [Surfaces](surfaces.md)
 - [Getting started](getting-started.md)
+- [Layer by layer (onboarding)](onboarding/index.html ":ignore")

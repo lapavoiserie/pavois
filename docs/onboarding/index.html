@@ -1,0 +1,662 @@
+<title>Pavois, Layer by Layer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,500;0,700;0,800;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F7F4EC;
+    --paper-2: #EFEADD;
+    --ink: #12213A;
+    --ink-2: #4A5468;
+    --muted: #6F6A5E;
+    --rule: #DDD6C6;
+    --navy: #0B2545;
+    --navy-ink: #F3EFE4;
+    --red: #C8102E;
+    --gold: #D99A1C;
+    --gold-ink: #1B1400;
+    --code-bg: #0B2545;
+    --code-ink: #EDE7D8;
+    --code-kw: #F1C15D;
+    --code-str: #9BD3A8;
+    --code-cm: #8A9BB8;
+    --ok: #2E7D4F;
+    --warn: #B4600F;
+    --shadow: 0 1px 0 rgba(18,33,58,.06), 0 12px 32px -18px rgba(18,33,58,.35);
+    --display: 'Besley', Georgia, 'Times New Roman', serif;
+    --body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --rail-w: 232px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0B1526; --paper-2: #101D33; --ink: #EDE7D8; --ink-2: #B9B2A3; --muted: #9A927F;
+      --rule: #24344F; --navy: #12213A; --navy-ink: #F3EFE4; --red: #FF4D5E; --gold: #E8B04B; --gold-ink: #1B1400;
+      --code-bg: #071021; --code-ink: #EDE7D8; --ok: #6FCF97; --warn: #F0A24B;
+      --shadow: 0 1px 0 rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.8);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0B1526; --paper-2: #101D33; --ink: #EDE7D8; --ink-2: #B9B2A3; --muted: #9A927F;
+    --rule: #24344F; --navy: #12213A; --navy-ink: #F3EFE4; --red: #FF4D5E; --gold: #E8B04B; --gold-ink: #1B1400;
+    --code-bg: #071021; --code-ink: #EDE7D8; --ok: #6FCF97; --warn: #F0A24B;
+    --shadow: 0 1px 0 rgba(0,0,0,.4), 0 12px 32px -18px rgba(0,0,0,.8);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--red); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  code, pre, kbd, .mono { font-family: var(--mono); }
+  code { font-size: .88em; background: var(--paper-2); padding: .1em .35em; border-radius: 3px; }
+  pre { background: var(--code-bg); color: var(--code-ink); padding: 1rem 1.2rem; border-radius: 6px; overflow-x: auto; font-size: .85rem; line-height: 1.5; margin: 1rem 0; }
+  pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+  .kw { color: var(--code-kw); } .str { color: var(--code-str); } .cm { color: var(--code-cm); font-style: italic; }
+  h1, h2, h3, h4 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.2rem, 4.5vw, 3.4rem); font-weight: 800; letter-spacing: -.01em; }
+  h2 { font-size: 1.9rem; font-weight: 700; margin-top: 3.2rem; padding-top: 1.2rem; border-top: 3px solid var(--navy); }
+  h3 { font-size: 1.25rem; font-weight: 700; margin-top: 2rem; }
+  h4 { font-size: 1rem; font-weight: 700; margin-top: 1.4rem; }
+  p { margin: .8rem 0; max-width: 68ch; }
+  ul, ol { max-width: 68ch; padding-left: 1.3rem; } li { margin: .3rem 0; }
+  .eyebrow { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .lead { font-size: 1.22rem; line-height: 1.5; color: var(--ink); max-width: 62ch; }
+  strong { font-weight: 600; }
+  blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border-left: 4px solid var(--gold); background: var(--paper-2); max-width: 68ch; }
+  blockquote p { margin: .3rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .95rem; margin: 1rem 0; }
+  th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .scroll { overflow-x: auto; }
+  figure { margin: 1.4rem 0; } figcaption { font-size: .9rem; color: var(--muted); margin-top: .5rem; max-width: 68ch; }
+  svg { max-width: 100%; height: auto; display: block; }
+  .rule-card { border: 1px solid var(--rule); border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; background: var(--paper-2); max-width: 68ch; }
+  .rule-card h4 { margin-top: 0; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: .7rem; letter-spacing: .06em; padding: .15em .5em; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink-2); vertical-align: middle; }
+  .tag.private { border-color: var(--red); color: var(--red); }
+  .tag.public { border-color: var(--ok); color: var(--ok); }
+  .btn { font-family: var(--mono); font-size: .8rem; padding: .5rem .9rem; border-radius: 6px; border: 1px solid var(--rule); background: var(--paper-2); color: var(--ink); cursor: pointer; }
+  .btn:hover { border-color: var(--ink-2); }
+  .btn.primary { background: var(--gold); color: var(--gold-ink); border-color: var(--gold); font-weight: 600; }
+  .btn[aria-pressed="true"] { background: var(--navy); color: var(--navy-ink); border-color: var(--navy); }
+
+  /* layout */
+  .shell { display: grid; grid-template-columns: var(--rail-w) minmax(0, 1fr); min-height: 100vh; }
+  .rail { position: sticky; top: 0; height: 100vh; overflow: auto; border-right: 1px solid var(--rule); background: var(--paper-2); padding: 1.2rem 1rem; }
+  .rail .brand { font-family: var(--display); font-weight: 800; font-size: 1.1rem; letter-spacing: .01em; display: flex; align-items: center; gap: .55rem; margin-bottom: 1.4rem; }
+  .rail nav { display: flex; flex-direction: column; gap: 2px; }
+  .rail nav a { display: flex; align-items: baseline; gap: .55rem; padding: .42rem .6rem; border-radius: 6px; color: var(--ink); text-decoration: none; font-size: .92rem; border-left: 3px solid transparent; }
+  .rail nav a .n { font-family: var(--mono); font-size: .68rem; color: var(--muted); min-width: 1.6em; }
+  .rail nav a:hover { background: var(--paper); }
+  .rail nav a[aria-current="true"] { border-left-color: var(--gold); background: var(--paper); font-weight: 600; }
+  .rail nav .group { font-family: var(--mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 1rem .6rem .3rem; }
+  .main { padding: 2.4rem clamp(1.2rem, 5vw, 4rem) 6rem; }
+  .content { max-width: 880px; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.6rem; margin-bottom: 1.5rem; }
+  .flags { display: inline-flex; gap: 4px; vertical-align: middle; }
+  .flags svg { width: 18px; height: 18px; }
+  .toolbar { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: 1rem 0; }
+  @media (max-width: 860px) {
+    .shell { grid-template-columns: 1fr; }
+    .rail { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--rule); }
+    .rail nav { flex-direction: row; flex-wrap: wrap; } .rail nav .group { width: 100%; }
+  }
+
+  /* stack explorer */
+  .stack { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr); gap: 1.4rem; align-items: start; }
+  @media (max-width: 860px) { .stack { grid-template-columns: 1fr; } }
+  .layers { display: flex; flex-direction: column; gap: 6px; }
+  .layer { display: grid; grid-template-columns: 2.3rem 1fr auto; align-items: center; gap: .8rem; padding: .7rem .9rem; border-radius: 8px; border: 1px solid var(--rule); background: var(--paper-2); text-align: left; cursor: pointer; font: inherit; color: var(--ink); width: 100%; }
+  .layer .idx { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+  .layer .name { font-family: var(--display); font-weight: 700; font-size: 1.05rem; }
+  .layer .what { font-size: .88rem; color: var(--ink-2); display: block; }
+  .layer .libs { font-family: var(--mono); font-size: .72rem; color: var(--muted); white-space: nowrap; }
+  .layer:hover { border-color: var(--ink-2); }
+  .layer[aria-pressed="true"] { border-color: var(--gold); background: var(--paper); box-shadow: inset 4px 0 0 var(--gold); }
+  .layer.app { background: var(--navy); color: var(--navy-ink); border-color: var(--navy); }
+  .layer.app .what, .layer.app .idx, .layer.app .libs { color: var(--navy-ink); opacity: .8; }
+  .panel { position: sticky; top: 1.2rem; border: 1px solid var(--rule); border-radius: 10px; padding: 1.1rem 1.3rem; background: var(--paper-2); box-shadow: var(--shadow); font-size: .95rem; }
+  .panel h3 { margin-top: 0; font-size: 1.35rem; }
+  .panel .owns, .panel .never { margin: .6rem 0; }
+  .panel .never { color: var(--ink-2); }
+  .panel .repos { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+  .panel p { max-width: none; }
+
+  /* tap walkthrough */
+  .walk { border: 1px solid var(--rule); border-radius: 10px; background: var(--paper-2); padding: 1.1rem 1.3rem; margin: 1.2rem 0; }
+  .walk .mode { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .walk .steps { display: grid; grid-template-columns: 1fr; gap: .5rem; }
+  .step { display: grid; grid-template-columns: 2rem 1fr; gap: .8rem; padding: .7rem .8rem; border-radius: 8px; border: 1px solid transparent; opacity: .5; transition: opacity .2s, border-color .2s; }
+  .step .k { font-family: var(--mono); font-size: .75rem; color: var(--muted); padding-top: .2rem; }
+  .step .where { font-family: var(--mono); font-size: .74rem; color: var(--muted); }
+  .step .t { font-weight: 600; }
+  .step p { margin: .25rem 0 0; font-size: .95rem; }
+  .step.on { opacity: 1; border-color: var(--gold); background: var(--paper); }
+  .step.done { opacity: .85; }
+  .walk .ctrl { display: flex; gap: .5rem; align-items: center; margin-top: 1rem; flex-wrap: wrap; }
+  .walk .ctrl .pos { font-family: var(--mono); font-size: .78rem; color: var(--muted); margin-left: auto; }
+
+  /* matrix */
+  .matrix td, .matrix th { text-align: center; }
+  .matrix td:first-child, .matrix th:first-child { text-align: left; }
+  .matrix .host { color: var(--ok); font-weight: 600; }
+  .matrix .none { color: var(--rule); }
+  .matrix .live { color: var(--gold); font-weight: 600; }
+  .matrix tr[data-role] { cursor: pointer; }
+  .matrix tr[data-role]:hover td { background: var(--paper-2); }
+  .matrix tr[aria-selected="true"] td { background: var(--paper-2); box-shadow: inset 3px 0 0 var(--gold); }
+  .legend { font-size: .85rem; color: var(--muted); }
+
+  /* where does my code go */
+  .where { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .6rem; margin: 1rem 0; }
+  .where button { text-align: left; padding: .7rem .8rem; border-radius: 8px; border: 1px solid var(--rule); background: var(--paper-2); color: var(--ink); font: inherit; font-size: .93rem; cursor: pointer; }
+  .where button:hover { border-color: var(--ink-2); }
+  .where button[aria-pressed="true"] { border-color: var(--gold); background: var(--paper); box-shadow: inset 4px 0 0 var(--gold); }
+  .answer { border-left: 4px solid var(--navy); padding: .8rem 1.1rem; background: var(--paper-2); border-radius: 0 8px 8px 0; margin: .8rem 0; font-size: .97rem; }
+  .answer .lib { font-family: var(--display); font-weight: 700; font-size: 1.15rem; }
+  .answer p { max-width: none; margin: .35rem 0; }
+
+  .gloss dt { font-family: var(--mono); font-weight: 600; font-size: .92rem; margin-top: .9rem; }
+  .gloss dd { margin: .2rem 0 0; max-width: 68ch; }
+  .foot { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .88rem; }
+</style>
+
+<div class="shell">
+  <aside class="rail" aria-label="Table of contents">
+    <div class="brand">
+      <span class="flags" aria-hidden="true">
+        <svg viewBox="0 0 10 10"><rect width="10" height="10" fill="#1F4FA3"/><rect x="2.5" y="2.5" width="5" height="5" fill="#F7F4EC"/></svg>
+        <svg viewBox="0 0 10 10"><rect width="10" height="10" fill="#F7F4EC"/><rect width="5" height="10" fill="#1F4FA3"/></svg>
+        <svg viewBox="0 0 10 10"><rect width="10" height="10" fill="#C8102E"/><rect x="0" y="4" width="10" height="2" fill="#1F4FA3"/></svg>
+      </span>
+      Pavois
+    </div>
+    <nav id="toc">
+      <a href="#story"><span class="n">00</span>The idea</a>
+      <a href="#stack"><span class="n">01</span>The stack</a>
+      <div class="group">Layers, bottom up</div>
+      <a href="#rui"><span class="n">02</span>rui — reactivity</a>
+      <a href="#nui"><span class="n">03</span>nui — the node model</a>
+      <a href="#kui"><span class="n">04</span>kui — capabilities</a>
+      <a href="#mui"><span class="n">05</span>mui — the vocabulary</a>
+      <a href="#backends"><span class="n">06</span>The six backends</a>
+      <a href="#surfaces"><span class="n">07</span>Surfaces and roles</a>
+      <a href="#dui"><span class="n">08</span>dui — the halyard</a>
+      <a href="#cafos"><span class="n">09</span>cafos — the network</a>
+      <div class="group">Cross-cutting</div>
+      <a href="#tap"><span class="n">10</span>Follow a tap</a>
+      <a href="#rules"><span class="n">11</span>The house rules</a>
+      <a href="#where"><span class="n">12</span>Where does my code go?</a>
+      <a href="#setup"><span class="n">13</span>Getting set up</a>
+      <a href="#glossary"><span class="n">14</span>Glossary</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+  <div class="content">
+
+    <header class="hero" id="story">
+      <div>
+        <div class="eyebrow">Developer onboarding · La Pavoiserie</div>
+        <h1>Pavois, layer by layer</h1>
+        <p class="lead">You write an application once, in Haxe. It becomes a Mac app with a real menu bar, a Windows app with extra windows, an Android app, a Sailfish app whose cover stays live, a terminal app — and any of them can hoist a panel onto another machine or a paired watch, with its buttons running <em>your</em> closures back home. This document is the map of how that works, from the reactive core up to the wire.</p>
+        <div class="toolbar">
+          <span class="tag">14 repositories</span>
+          <span class="tag">6 backends</span>
+          <span class="tag">Haxe 4.3</span>
+          <span class="tag">docs in English · conversation in French</span>
+        </div>
+      </div>
+    </header>
+
+    <p><em>Pavoiser</em> is to dress a ship with flags. In this framework the <strong>surfaces</strong> of your application are the flags, the <strong>machines</strong> around you are the masts, and the library that carries a flag to a mast is literally the halyard. An application with every declared surface flying — window here, cover there, panel across the room — is <em>en grand pavois</em>.</p>
+
+    <blockquote>
+      <p><strong>The one idea.</strong> Declare a surface once, in the shared vocabulary. Every platform mounts it on what it actually has — and where a platform has nothing to mount it on, the build says so, at the declaration, naming the platform.</p>
+    </blockquote>
+
+    <p>Everything below is a consequence of taking that sentence seriously: a reactive core that can re-run any surface when state moves; a node model that can describe any tree the same way; a contract each backend signs; and a transport that refuses to send a surface anywhere nobody named.</p>
+
+    <h2 id="stack">01 · The stack</h2>
+    <p>Fourteen repositories, each deliberately small. Click a layer to see what it owns — and, just as important, what it <em>never</em> does. The boundaries are where most of the design lives.</p>
+
+    <div class="stack">
+      <div class="layers" role="group" aria-label="Layers of the platform">
+        <button class="layer app" data-layer="app" aria-pressed="false"><span class="idx">—</span><span><span class="name">Your application</span><span class="what">one file, six builds</span></span><span class="libs">mui.App</span></button>
+        <button class="layer" data-layer="mui" aria-pressed="false"><span class="idx">05</span><span><span class="name">mui</span><span class="what">the portable vocabulary: views, @:state, @:surface</span></span><span class="libs">mui</span></button>
+        <button class="layer" data-layer="backends" aria-pressed="false"><span class="idx">06</span><span><span class="name">Backends</span><span class="what">render with the platform's real widgets</span></span><span class="libs">sui aui wui qui cui pui</span></button>
+        <button class="layer" data-layer="dui" aria-pressed="false"><span class="idx">08</span><span><span class="name">dui</span><span class="what">carries a surface to a machine or a watch</span></span><span class="libs">dui</span></button>
+        <button class="layer" data-layer="nui" aria-pressed="false"><span class="idx">03</span><span><span class="name">nui</span><span class="what">what a node is; pull, push and snapshot</span></span><span class="libs">nui</span></button>
+        <button class="layer" data-layer="rui" aria-pressed="false"><span class="idx">02</span><span><span class="name">rui</span><span class="what">signals, effects, state, the view rule</span></span><span class="libs">rui</span></button>
+        <button class="layer" data-layer="kui" aria-pressed="false"><span class="idx">04</span><span><span class="name">kui</span><span class="what">native capabilities, once per platform</span></span><span class="libs">kui kui-store kui-wear</span></button>
+        <button class="layer" data-layer="cafos" aria-pressed="false"><span class="idx">09</span><span><span class="name">cafos</span><span class="what">machines, presence, links, identity</span></span><span class="libs">cafos</span></button>
+      </div>
+      <aside class="panel" id="layer-panel" aria-live="polite">
+        <div class="eyebrow">Pick a layer</div>
+        <h3>The boundaries are the design</h3>
+        <p>Each library is allowed to know a specific set of things. <code>rui</code> knows nothing about views. <code>nui</code> knows nothing about a platform. <code>dui</code> knows nothing about Android. <code>cafos</code> knows nothing about a <code>Node</code>. When a feature seems to need a library to learn something new, that is the signal to look one layer up or down.</p>
+      </aside>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 760 330" role="img" aria-label="Dependency diagram: the application depends on mui; mui resolves onto one of six backends; backends depend on rui and nui; dui sits beside the backends and depends on nui and rui, with transports over cafos and kui-wear; kui sits under everything as capabilities.">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+        <g fill="none" stroke="currentColor" stroke-width="1.2" font-family="IBM Plex Mono, monospace" font-size="12">
+          <rect x="280" y="14" width="200" height="34" rx="6"/><text x="380" y="36" text-anchor="middle" fill="currentColor" stroke="none" font-weight="600">your application</text>
+          <rect x="280" y="78" width="200" height="34" rx="6"/><text x="380" y="100" text-anchor="middle" fill="currentColor" stroke="none">mui · vocabulary + contract</text>
+          <line x1="380" y1="48" x2="380" y2="78" marker-end="url(#arr)"/>
+          <text x="392" y="66" fill="currentColor" stroke="none" font-size="11">extends mui.App</text>
+
+          <g id="bk">
+            <rect x="60" y="150" width="88" height="30" rx="6"/><text x="104" y="170" text-anchor="middle" fill="currentColor" stroke="none">sui</text>
+            <rect x="160" y="150" width="88" height="30" rx="6"/><text x="204" y="170" text-anchor="middle" fill="currentColor" stroke="none">aui</text>
+            <rect x="260" y="150" width="88" height="30" rx="6"/><text x="304" y="170" text-anchor="middle" fill="currentColor" stroke="none">wui</text>
+            <rect x="360" y="150" width="88" height="30" rx="6"/><text x="404" y="170" text-anchor="middle" fill="currentColor" stroke="none">qui</text>
+            <rect x="460" y="150" width="88" height="30" rx="6"/><text x="504" y="170" text-anchor="middle" fill="currentColor" stroke="none">cui</text>
+            <rect x="560" y="150" width="88" height="30" rx="6"/><text x="604" y="170" text-anchor="middle" fill="currentColor" stroke="none">pui</text>
+          </g>
+          <path d="M380,112 L380,130 M104,150 L104,130 L604,130 L604,150 M204,130 L204,150 M304,130 L304,150 M404,130 L404,150 M504,130 L504,150" />
+          <text x="392" y="127" fill="currentColor" stroke="none" font-size="11">-D mui_backend=one of them</text>
+
+          <rect x="672" y="140" width="74" height="50" rx="6" stroke="#D99A1C" stroke-width="2"/><text x="709" y="160" text-anchor="middle" fill="currentColor" stroke="none" font-weight="600">dui</text><text x="709" y="177" text-anchor="middle" fill="currentColor" stroke="none" font-size="10">the halyard</text>
+          <line x1="648" y1="165" x2="672" y2="165" stroke="#D99A1C" stroke-width="2" marker-end="url(#arr)"/>
+
+          <rect x="200" y="222" width="150" height="34" rx="6"/><text x="275" y="244" text-anchor="middle" fill="currentColor" stroke="none">rui · reactivity</text>
+          <rect x="410" y="222" width="150" height="34" rx="6"/><text x="485" y="244" text-anchor="middle" fill="currentColor" stroke="none">nui · node model</text>
+          <path d="M104,180 L104,205 L604,205 L604,180 M204,180 L204,205 M304,180 L304,205 M404,180 L404,205 M504,180 L504,205" />
+          <line x1="275" y1="205" x2="275" y2="222" marker-end="url(#arr)"/>
+          <line x1="485" y1="205" x2="485" y2="222" marker-end="url(#arr)"/>
+          <path d="M709,190 L709,205 L485,205" stroke="#D99A1C" stroke-width="2"/>
+          <line x1="410" y1="239" x2="350" y2="239" marker-end="url(#arr)"/><text x="380" y="234" text-anchor="middle" fill="currentColor" stroke="none" font-size="10">uses</text>
+
+          <rect x="60" y="284" width="270" height="34" rx="6"/><text x="195" y="306" text-anchor="middle" fill="currentColor" stroke="none">kui · capabilities (store, wear, …)</text>
+          <rect x="430" y="284" width="270" height="34" rx="6"/><text x="565" y="306" text-anchor="middle" fill="currentColor" stroke="none">cafos · network substrate</text>
+          <path d="M709,190 L709,270 L565,270 L565,284" stroke="#D99A1C" stroke-width="2" marker-end="url(#arr)"/>
+          <path d="M700,190 L700,262 L195,262 L195,284" stroke="#D99A1C" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <text x="612" y="266" fill="currentColor" stroke="none" font-size="10">transports</text>
+        </g>
+      </svg>
+      <figcaption>Who depends on whom. The gold edges are <code>dui</code>'s: it carries a surface over either substrate, and neither substrate knows what a node is. Nothing points <em>up</em> — a lower layer never names a higher one.</figcaption>
+    </figure>
+
+    <h2 id="rui">02 · rui — reactivity</h2>
+    <p class="lead">Owns <strong>state and change propagation</strong>, and nothing else. No views, no rendering, no platform.</p>
+    <p>Three primitives, and one rule. A <code>Signal</code> holds a value and a list of subscribers. An <code>Effect</code> runs a function, records every signal it read while running, and re-runs when any of them writes — recapturing its dependencies each time, so a branch that starts reading a different cell is followed without ceremony. A <code>Lifetime</code> owns what an effect opened and undoes it when the application is over.</p>
+<pre><code><span class="kw">var</span> count = <span class="kw">new</span> State(0);
+<span class="kw">new</span> Effect(() -> trace(<span class="str">"count = "</span> + count.get()));  <span class="cm">// prints 0 now</span>
+count.set(1);      <span class="cm">// prints 1</span>
+count.set(1);      <span class="cm">// prints nothing: unchanged</span>
+count.peek();      <span class="cm">// untracked read — inside an effect, no subscription</span></code></pre>
+
+    <h3>State: a signal with a platform half</h3>
+    <p><code>rui.state.State&lt;T&gt;</code> is what every backend's <code>@:state</code> is built on. It adds the two things a UI library needs beyond a signal:</p>
+    <ul>
+      <li>a <strong>platform sink</strong> — the native mirror: a Compose <code>MutableState</code>, a Swift <code>AppState</code>, a Qt property. Called <em>directly</em> on an application write, never through the scheduler, so a screen mirrored by a sink updates on the write whatever else is going on;</li>
+      <li>a <strong>durable sink</strong> — for a cell declared <code>@:state(durable)</code>, a write-through to a device-local store shared with the application's own detached surfaces (a widget, an extension). Compare-and-set, per key, because two processes may write.</li>
+    </ul>
+    <p><code>applyExternal(v)</code> is the platform writing back (a text field the user typed in): effects re-run, the sink stays silent, because the platform already holds the value.</p>
+
+    <h3>The scheduler, and the batch</h3>
+    <p>Effects run <strong>synchronously</strong> on every target but JS: a write re-runs what reads it before <code>set</code> returns. That is a tested contract, and two backends depend on it — a terminal has no event loop to defer to, and a Sailfish process reaches Haxe from a Qt callback that will not come back.</p>
+    <p>Synchronous is right for one write and wasteful for several. <code>Scheduler.batch</code> holds the queue for the length of a scope; effects deduplicate themselves, so a handler that writes three cells re-runs each effect <em>once</em>. Every backend opens a batch where a host gesture arrives — <strong>one gesture, one render</strong>. State sinks are never delayed by it.</p>
+
+    <div class="rule-card">
+      <h4>The view rule</h4>
+      <p><strong>A view may only read things that are immutable or observable.</strong> A view that reads a plain mutable field compiles, renders once, and goes quietly stale, because nothing can tell it to run again. <code>rui.macros.ViewRule</code> refuses it at compile time, naming the field. Observable: a <code>State</code>, anything implementing <code>rui.Observable</code>. Immutable: a <code>final</code> field, an <code>ImmutableList</code>. Local: a variable inside the view. Anything else is an error.</p>
+    </div>
+
+    <h2 id="nui">03 · nui — the node model</h2>
+    <p class="lead">Answers one question — <strong>what is a node in a view tree?</strong> — and provides the contracts a renderer consumes that tree through. It renders nothing.</p>
+    <p>A <code>Node</code> has a <code>type</code> (<code>"Text"</code>, <code>"Button"</code>, <code>"VStack"</code>…), an optional <code>key</code>, typed <code>props</code> (<code>PString</code>, <code>PInt</code>, <code>PCallback</code>, and a <code>PReactive</code> thunk for a value that is read live), an ordered chain of <code>modifiers</code>, and <code>children</code>. That vocabulary is the <em>canon</em>: every backend describes its tree in these names — <code>Button</code>/<code>label</code>+<code>onClick</code>, <code>Toggle</code>/<code>isOn</code> — so a tree served from a Mac and one served from a terminal look the same on a wire.</p>
+
+    <h3>Three contracts, because the host decides</h3>
+    <div class="scroll"><table>
+      <tr><th>Contract</th><th>Who holds the tree</th><th>For hosts that…</th><th>Used by</th></tr>
+      <tr><td><strong>Pull</strong> — <code>NodeSource</code></td><td>the application; the host walks it on demand</td><td>diff and preserve widget state themselves (SwiftUI, Compose)</td><td>sui, aui, cui</td></tr>
+      <tr><td><strong>Push</strong> — <code>NodeSink</code></td><td>Haxe; it diffs and applies targeted patches</td><td>keep stateful widgets and diff nothing (Qt/Silica, WinUI)</td><td>qui, wui</td></tr>
+      <tr><td><strong>Snapshot</strong> — <code>Snapshot.project</code> / <code>inflate</code></td><td>nobody live: the tree as pure data</td><td>live in another process or on another machine</td><td>widgets, Companion</td></tr>
+    </table></div>
+    <p>Neither pull nor push reduces to the other: pull on Qt would destroy and recreate stateful widgets on every change, losing focus and caret; push on SwiftUI would duplicate its diff. So <code>nui</code> normalises both.</p>
+
+    <h3>The snapshot, and why ids are keyed by place</h3>
+    <p>A live tree cannot leave the process — its props carry closures. <code>Snapshot.project</code> replaces each closure with an integer in an <code>ActionTable</code> and hands back <code>haxe.Json</code>-safe data. Ids are keyed by the node's <strong>place</strong> (path and prop), never by the closure's pointer, so the button in the same slot keeps its id across re-projections and a tap that raced a fresh frame runs the current closure rather than finding a hole. The table is never cleared between generations — clearing it was exactly how the first interactive companion turned every keystroke into a stale tap.</p>
+    <p>Two more pieces sit beside it. <code>nui.Follow</code> keeps a snapshot surface <em>current</em>: it runs the content thunk inside an effect, so a write to any cell the tree read re-projects and republishes — the application never says "now". <code>nui.SelfSource</code> is the pull contract over <code>Node</code> itself, which is what lets a backend draw a tree that <em>arrived</em> without converting it into its own views.</p>
+
+    <h2 id="kui">04 · kui — native capabilities</h2>
+    <p class="lead">Written once, keyed by platform, used from every backend. Reaching the platform no longer means choosing a backend and staying there.</p>
+    <p>A capability is an interface naming no platform, plus one implementation per operating system at <code>p.platform.&lt;id&gt;.Name</code>. Each implementation carries a <code>@:kuiNative</code> payload saying what the build has to do for it — keyed by <strong>toolchain</strong> rather than platform, because one OS has several (macOS links through hxcpp under <code>cui</code>, through Xcode under <code>sui</code>):</p>
+<pre><code><span class="kw">@:kuiNative</span>({
+    hxcpp:  {files: [<span class="str">"native/battery_mac.mm"</span>], libs: [<span class="str">"-framework"</span>, <span class="str">"IOKit"</span>]},
+    xcode:  {frameworks: [<span class="str">"IOKit"</span>]},
+    gradle: {sources: [...], dependencies: [...], permissions: [...], components: [...]},
+})
+<span class="kw">class</span> Battery <span class="kw">implements</span> battery.Battery { ... }
+
+<span class="cm">// in an application, on any backend:</span>
+<span class="kw">var</span> battery = kui.Kui.get(battery.Battery);   <span class="cm">// null where the platform has none</span></code></pre>
+    <p><code>kui.Kui.get</code> answers <code>null</code> on a platform with no implementation. An application that uses a capability when there is one, and does not when there is not, writes an <code>if</code> — not a define, not a stub that silently does nothing.</p>
+    <p>Two capabilities ship as their own repositories: <strong>kui-store</strong>, the durable key-value store behind <code>@:state(durable)</code>; and <strong>kui-wear</strong>, messages to and from a paired watch over the Wear OS Data Layer, including the manifest-declared service that receives while the app is not on screen.</p>
+
+    <h2 id="mui">05 · mui — the portable vocabulary</h2>
+    <p class="lead">The layer an application writes against. There is no <code>mui.App</code> class: <code>mui</code> is a <strong>contract plus a resolver</strong>.</p>
+    <p>Every name — <code>mui.View</code>, <code>mui.ui.Button</code>, <code>mui.App</code> — is an alias resolved at compile time onto the one backend the build selects, and checked against <code>mui.Contract</code>. There is no wrapper at runtime and nothing to step through.</p>
+<pre><code><span class="cm"># in the build file</span>
+-D mui_backend=aui
+--macro mui.macros.Bind.all()</code></pre>
+    <p>The direction matters, and it was inverted on purpose. <code>mui</code> once held 132 <code>#if (mui_backend == …)</code> branches across 22 files: it adapted to each backend, so it had to know all six. Now each backend declares its own conformance under <code>&lt;backend&gt;.mui.*</code> and <code>mui</code> only resolves and checks. Nothing in <code>mui</code> names a backend, and adding a seventh touches zero files there.</p>
+
+    <h3>What an application actually uses</h3>
+    <p>Four things, and none requires reading <code>rui</code>'s documentation:</p>
+    <ul>
+      <li><code>@:state var count:Int = 0</code> — an observable cell; <code>count.get()</code> in a view subscribes it, <code>count.set()</code> re-runs it. Add <code>(durable)</code> to keep it across processes;</li>
+      <li><code>body():View</code> — the main window, always;</li>
+      <li><code>@:surface(Role)</code> — every other surface: a cover, a menu, a settings pane, a panel on another machine;</li>
+      <li><code>lifetime.own(…)</code> — anything long-lived, undone when the application is over.</li>
+    </ul>
+    <p>The vocabulary is 29 names: <code>VStack</code>, <code>HStack</code>, <code>ZStack</code>, <code>ScrollView</code>, <code>SafeArea</code>, <code>TabView</code>, <code>Text</code>, <code>Button</code>, <code>Divider</code>, <code>Spacer</code>, <code>Image</code>, <code>ListView</code>, <code>ProgressView</code>, <code>Toggle</code>, <code>Slider</code>, <code>TextInput</code>, <code>ConditionalView</code>, <code>ForEach</code>, and the state, binding and animation types behind them. A backend may leave exactly one out — a terminal cannot draw an <code>Image</code>, and <code>cui</code> says so by providing none.</p>
+
+    <h2 id="backends">06 · The six backends</h2>
+    <p class="lead">Each is an independent library that renders the vocabulary with its platform's real widgets, and <em>hosts</em> the surface roles its platform has.</p>
+    <div class="scroll"><table>
+      <tr><th>lib</th><th>platform</th><th>renders with</th><th>nui mode</th><th>hosts</th><th>repo</th></tr>
+      <tr><td><strong>sui</strong></td><td>macOS · iOS · visionOS</td><td>SwiftUI, built at runtime from the Haxe tree; Haxe → C++ via hxcpp</td><td>pull</td><td>Preferences, Auxiliary, Commands, Glance (WidgetKit), Companion</td><td><span class="tag public">public</span></td></tr>
+      <tr><td><strong>aui</strong></td><td>Android · Wear OS</td><td>Jetpack Compose; Haxe on the JVM, Compose follows the Haxe reads</td><td>pull</td><td>Glance (App Widget), Companion</td><td><span class="tag public">public</span></td></tr>
+      <tr><td><strong>wui</strong></td><td>Windows</td><td>WinUI 3, C++/WinRT; Haxe on hxcpp behind a push sink</td><td>push</td><td>Auxiliary, Commands (MenuBar), Companion</td><td><span class="tag public">public</span></td></tr>
+      <tr><td><strong>qui</strong></td><td>Sailfish OS</td><td>Qt/Silica; lives in <code>haxe-sailfish</code></td><td>push</td><td>Glance — the cover, mounted <em>live</em></td><td><span class="tag private">private</span></td></tr>
+      <tr><td><strong>cui</strong></td><td>a terminal</td><td>a cell grid; the reference for the checks</td><td>pull</td><td>Commands (key bindings), Companion</td><td><span class="tag public">public</span></td></tr>
+      <tr><td><strong>pui</strong></td><td>browser, desktop, mobile, Sailfish</td><td>its own drawing — one look everywhere; Canvas2D, CoreGraphics, Direct2D, QPainter</td><td>self</td><td>Companion</td><td><span class="tag private">private</span></td></tr>
+    </table></div>
+    <p>Two of them are worth a sentence each. <strong>pui</strong> takes the other side of the bargain: the five before it delegate to a host toolkit and inherit its look, its limits and its surprises; <code>pui</code> draws every widget itself and ports one surface per platform instead of talking round a set of native controls. <strong>qui</strong> hosts the cover <em>live</em> — an effect that reconciles, not a snapshot that is sampled — and the rest of the surface model is built to leave that variation alone.</p>
+
+    <h2 id="surfaces">07 · Surfaces and roles</h2>
+    <p class="lead">An application is not one render root. Each thing it can put on screen is a <strong>surface</strong>, declared by <strong>role</strong> — never by the native surface's name.</p>
+    <p>Exposing "cover", "widget" and "live tile" would have made every application name a platform, and several of those are the same thing wearing different clothes. So an application says what a surface is <em>for</em>, and each backend maps it onto what it has. Click a role for what it means on each platform.</p>
+
+    <div class="scroll"><table class="matrix" id="matrix">
+      <tr><th>role</th><th>sui</th><th>aui</th><th>wui</th><th>qui</th><th>cui</th><th>pui</th></tr>
+      <tr data-role="Primary"><td><strong>Primary</strong> <span class="legend">implicit: <code>body()</code></span></td><td class="host">●</td><td class="host">●</td><td class="host">●</td><td class="host">●</td><td class="host">●</td><td class="host">●</td></tr>
+      <tr data-role="Glance"><td><strong>Glance</strong></td><td class="host">●</td><td class="host">●</td><td class="none">·</td><td class="live">◉</td><td class="none">·</td><td class="none">·</td></tr>
+      <tr data-role="Preferences"><td><strong>Preferences</strong></td><td class="host">●</td><td class="none">·</td><td class="none">·</td><td class="none">·</td><td class="none">·</td><td class="none">·</td></tr>
+      <tr data-role="Commands"><td><strong>Commands</strong></td><td class="host">●</td><td class="none">·</td><td class="host">●</td><td class="none">·</td><td class="host">●</td><td class="none">·</td></tr>
+      <tr data-role="Auxiliary"><td><strong>Auxiliary</strong></td><td class="host">●</td><td class="none">·</td><td class="host">●</td><td class="none">·</td><td class="none">·</td><td class="none">·</td></tr>
+      <tr data-role="Companion"><td><strong>Companion</strong></td><td class="host">●</td><td class="host">●</td><td class="host">●</td><td class="none">·</td><td class="host">●</td><td class="host">●</td></tr>
+      <tr data-role="Notification"><td><strong>Notification</strong> <span class="legend">no declaration form yet</span></td><td class="none">·</td><td class="none">·</td><td class="none">·</td><td class="none">·</td><td class="none">·</td><td class="none">·</td></tr>
+    </table></div>
+    <p class="legend">● hosted · ◉ hosted <em>live</em> (reconciled, never sampled) · a blank cell is a compile error unless the declaration says <code>optional</code></p>
+    <div class="answer" id="role-answer"><p class="lib">Primary</p><p>The main window. Implicit — it is <code>body()</code> — and required everywhere. <code>@:surface(Primary)</code> is a compile error saying so.</p></div>
+
+    <h3>Live and snapshot: the two corners</h3>
+    <p>A <strong>live</strong> surface is an effect: the host is on our side of the boundary, and the effect reconciles when the state it read changes. A <strong>snapshot</strong> surface is drawn by somebody else — a launcher, an extension in another process, a machine across the room — who decides when to draw. Nobody over there will notice a cell moved, so noticing is ours: <code>nui.Follow</code> runs the declaration inside an effect and republishes on every write. The application writes no call, and cannot forget one.</p>
+    <p>Portable does not mean silent. Each backend states the roles it hosts with <code>@:hostedRoles</code> on its <code>mui.App</code>; a declaration with no host on the target being built <strong>stops that build</strong>, naming the role and the backend. Accepting a gap is a word in your own source: <code>@:surface(Glance, optional)</code>.</p>
+    <p>A <code>Companion</code> leaves the device, and nothing about writing an application implies wanting that. It takes three deliberate acts, none of them a default: <code>-D mui_carry</code> in the build file, a <code>CompanionServe.serve</code> call, and a <strong>pairing</strong> — which is the next layer's business.</p>
+
+    <h2 id="dui">08 · dui — the halyard</h2>
+    <p class="lead"><code>nui.Follow</code> decides <em>when</em> a fresh picture exists. <code>dui</code> decides <strong>where it goes</strong>, and refuses to decide it by accident.</p>
+    <p>The library exists because of a defect. Its predecessor lived inside the network library and matched sinks on the <em>bare surface name</em>: an application serving a panel sent it to every machine on the network offering a sink by that name, reconnecting as machines appeared, and the source never named a destination — there was nowhere in the code where it could have. <code>dui</code> makes the target a parameter of the contract.</p>
+    <div class="scroll"><table>
+      <tr><th>piece</th><th>what it is</th></tr>
+      <tr><td><code>Transport</code> · <code>Target</code> · <code>Channel</code></td><td>enumerate who could receive a surface, open a channel to <strong>one</strong> of them. A channel carries opaque strings both ways.</td></tr>
+      <tr><td><code>Fabric</code> · <code>Targets</code></td><td>one transport, many surfaces; the target list as <em>observable state</em>, so a picker in a view follows machines appearing and vanishing</td></tr>
+      <tr><td><code>Pairings</code></td><td>which target each surface was paired to — a durable string per surface, through <code>rui.state.Durable</code></td></tr>
+      <tr><td><code>Hoist</code> · <code>Reach</code></td><td>one surface, flown where its reach allows. <code>Paired</code> is the default: with no pairing, nothing leaves. <code>Chosen(fn)</code> for tests; <code>Anywhere</code> is the old behaviour, kept writable and made a deliberate word.</td></tr>
+      <tr><td><code>dui.nui</code></td><td>the snapshot wire: <code>{gen, tree}</code> out, <code>{action, arg}</code> back — no socket anywhere, provable in a harness</td></tr>
+      <tr><td><code>dui.cafos</code> · <code>dui.wear</code> · <code>dui.mui</code></td><td>the transport over CAFOS machines; the transport to a paired watch; every <code>@:surface(Companion)</code> an application declares</td></tr>
+    </table></div>
+    <p>Two fabrics taught the contract its shape. A CAFOS machine <em>announces</em> itself and may vanish; a watch is <em>bound once</em> and is simply asleep or awake — so <code>Target.reachable</code> exists, and so does <code>Channel.attached</code>, because a paired fabric attaches inside <code>open</code>, before the caller has wired anything. And on a paired fabric "reachable" is not "listening": the sink announces itself, and the source answers a second attach with a whole tree.</p>
+    <p><strong>The state never leaves the phone.</strong> What crosses is a picture and, on the way back, an integer. The closure runs where the state lives.</p>
+
+    <h2 id="cafos">09 · cafos — the network substrate</h2>
+    <p class="lead">Which machines and surfaces exist <em>here and now</em>, how to reach them, and who may.</p>
+    <p>An agent runs on each machine. Agents discover each other (UDP broadcast, with a unicast seed across routed subnets), link over WebSocket, and replicate a <strong>registry</strong> of presence: machines, applications, and the surfaces each offers, keyed <code>surface/&lt;machineId&gt;/&lt;sid&gt;</code>. Identity is Ed25519 with enrolment; a sink applies a per-surface policy — <code>open</code>, <code>net</code> (any authenticated principal of my network), <code>approve</code>, or an explicit allow list. What travels inside a link is an <strong>opaque channel</strong>: <code>cafos</code> relays frames and never parses them.</p>
+    <p>To Pavois, <code>cafos</code> is what <code>kui</code> is for platform capabilities: the substrate underneath. It has its own identity, its own documentation in French, and its own roadmap (fluidity — content that follows surfaces as they come and go). It knows nothing about a <code>nui.Node</code>, and that is a boundary the family took a week to restore.</p>
+
+    <h2 id="tap">10 · Follow a tap</h2>
+    <p class="lead">The best way to hold the stack in your head is to watch one gesture cross it. Step through both cases.</p>
+    <div class="walk" id="walk">
+      <div class="mode" role="group" aria-label="Scenario">
+        <button class="btn" data-mode="local" aria-pressed="true">A button on the phone's own screen</button>
+        <button class="btn" data-mode="remote" aria-pressed="false">A button on a Companion surface, on a paired watch</button>
+      </div>
+      <div class="steps" id="steps"></div>
+      <div class="ctrl">
+        <button class="btn" id="prev">← back</button>
+        <button class="btn primary" id="next">next →</button>
+        <button class="btn" id="reset">restart</button>
+        <span class="pos" id="pos"></span>
+      </div>
+    </div>
+    <p>Notice what stays the same across the two: the closure is <em>your</em> closure, it runs where the state lives, the gesture is one batch, and a screen that mirrors a cell updates on the write. What differs is only where the picture goes — which is the whole of <code>dui</code>'s job.</p>
+
+    <h2 id="rules">11 · The house rules</h2>
+    <p class="lead">A few conventions repeat in every library, and they are load-bearing. When a change feels awkward, it is usually bumping into one of these.</p>
+    <div class="rule-card"><h4>What the compiler can know, the compiler says</h4><p>Never a marker on screen for something knowable at build time. A role with no host stops the build naming the platform; a view reading a mutable field is refused naming the field; a Companion without the carry define does not compile. The one exception is a tree received <em>as data</em>, which degrades with a word rather than a crash.</p></div>
+    <div class="rule-card"><h4>Identity is the place, never the pointer</h4><p>Node identity, focus, and action ids across generations are keyed by where a thing sits in the tree. A pointer changes on every rebuild; a place does not.</p></div>
+    <div class="rule-card"><h4>Degradation is declared, not accidental</h4><p><code>@:surface(Role, optional)</code>, a backend leaving a contract entry out, a capability answering <code>null</code>. Never a <code>case _:</code> dropping something on the floor.</p></div>
+    <div class="rule-card"><h4>One record per surface</h4><p>Its own effect, its own lifetime, its own action table. Never a shared static registry — two surfaces must not share an id namespace.</p></div>
+    <div class="rule-card"><h4>The picture, not the pipeline</h4><p>A widget or a remote surface is proven by looking at the screen. A view-tree oracle proves the pipeline ran; it does not prove anyone can see the result — black text on a black widget passed every automated check.</p></div>
+    <div class="rule-card"><h4>Nothing off-device by default</h4><p>When a library is both "native app" and "app on a network", the second never arrives with the first. Three deliberate acts before a surface leaves: the define, the call, the pairing.</p></div>
+    <div class="rule-card"><h4>English in the repositories</h4><p>Code, documentation, commit messages, tests. Conversation happens in French; the artefacts do not.</p></div>
+
+    <h2 id="where">12 · Where does my code go?</h2>
+    <p class="lead">Pick what you are trying to do. The answer names the library, and — more usefully — the libraries that must <em>not</em> learn about it.</p>
+    <div class="where" id="where-q" role="group" aria-label="What are you trying to do?"></div>
+    <div class="answer" id="where-a"><p>Choose a task above.</p></div>
+
+    <h2 id="setup">13 · Getting set up</h2>
+    <p>Every library is a haxelib registered in <em>dev</em> mode against its checkout, so a change in one is seen by the next build of any other:</p>
+<pre><code>haxelib dev rui ~/new-projects/rui
+haxelib dev nui ~/new-projects/nui
+haxelib dev kui ~/new-projects/kui
+haxelib dev mui ~/new-projects/mui
+haxelib dev dui ~/new-projects/dui
+haxelib dev aui ~/new-projects/aui        <span class="cm"># and sui, cui, wui, pui, kui-store, kui-wear</span></code></pre>
+    <p>Each library carries its own checks, runnable without a device — start there when you touch one:</p>
+    <div class="scroll"><table>
+      <tr><th>lib</th><th>check</th><th>what it proves</th></tr>
+      <tr><td>rui</td><td><code>haxe -cp src -cp test -main StateCheck --interp</code> (also <code>BatchCheck</code>, <code>CleanupCheck</code>, <code>LifetimeCheck</code>)</td><td>synchrony, batching, sinks, cleanups</td></tr>
+      <tr><td>nui</td><td><code>haxe -cp src -cp test -lib rui -main Check --interp</code></td><td>70 checks: the model, both contracts, snapshot, follow, self source</td></tr>
+      <tr><td>mui</td><td><code>test/surfaces/run.sh</code>, <code>test/durable/run.sh</code></td><td>the compile-time refusals, as fixtures that must fail for the stated reason</td></tr>
+      <tr><td>dui</td><td><code>haxe -cp src -cp test -lib rui -lib nui -main Check --interp</code>; <code>test/companion-smoke.sh</code></td><td>44 checks with no socket; then the wire end to end with a real agent</td></tr>
+      <tr><td>cafos</td><td><code>test/project-smoke.sh</code>, <code>test/project-remote-smoke.sh</code></td><td>the rsx2ui projection path, local and cross-machine</td></tr>
+    </table></div>
+    <p>Two habits that have paid for themselves repeatedly: judge a build by its <strong>exit code</strong>, never by whether a binary exists (a failed link leaves yesterday's executable in place); and when a device is involved, <strong>look at the capture</strong>.</p>
+
+    <h2 id="glossary">14 · Glossary</h2>
+    <dl class="gloss">
+      <dt>surface</dt><dd>One thing an application can put on screen, declared by role. The main window is one; a cover, a menu, a panel on another machine are others.</dd>
+      <dt>role</dt><dd>What a surface is for — Primary, Glance, Preferences, Commands, Auxiliary, Companion, Notification — never the native surface's name.</dd>
+      <dt>live / snapshot</dt><dd>A live surface is an effect that reconciles; a snapshot surface is a picture somebody else draws when they decide, kept current by <code>nui.Follow</code>.</dd>
+      <dt>backend</dt><dd>One of six libraries that render the vocabulary with a platform's real widgets and host the roles it has.</dd>
+      <dt>contract</dt><dd><code>mui.Contract</code>: the list of names a backend must provide, checked when <code>Bind.all()</code> resolves the aliases.</dd>
+      <dt>describer</dt><dd><code>mui.surface.Describe.impl</code>: each backend's way of turning its views into canonical <code>nui</code> nodes, signed at construction.</dd>
+      <dt>sink (state)</dt><dd>The native mirror of a cell — a Compose <code>MutableState</code>, a Qt property — called directly on an application write.</dd>
+      <dt>sink (surface)</dt><dd>The receiving end of a carried surface: it inflates frames and draws them, and sends action ids home.</dd>
+      <dt>action id</dt><dd>The integer that replaces a closure in a snapshot, keyed by the node's place so it survives re-projection.</dd>
+      <dt>fabric / transport</dt><dd>Where a surface can be carried (a network of machines, a paired watch), behind <code>dui.Transport</code>.</dd>
+      <dt>pairing</dt><dd>A remembered choice of target for one surface. Without one, nothing leaves the device.</dd>
+      <dt>capability</dt><dd>A native ability declared once and implemented per platform, resolved by <code>kui.Kui.get</code>.</dd>
+      <dt>durable</dt><dd>A cell whose value lives in a device-local store shared with the application's own detached surfaces; <code>@:state(durable)</code>.</dd>
+      <dt>en grand pavois</dt><dd>Every declared surface flying at once.</dd>
+    </dl>
+
+    <div class="foot">Kept alongside the code in <code>pavois/docs/onboarding/</code>. When a library changes its boundary, this page is part of the change.</div>
+  </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  // ---------- layer explorer ----------
+  var LAYERS = {
+    app: {
+      title: "Your application",
+      owns: "A class extending <code>mui.App</code>: <code>@:state</code> fields, <code>body()</code>, and one <code>@:surface</code> method per extra surface. Built once per backend with <code>-D mui_backend=…</code>.",
+      never: "Names a backend or a platform. Constructs a <code>Signal</code> or an <code>Effect</code>. Calls anything to say \"redraw now\" — that is the framework's job, and the view rule is what makes it possible.",
+      repos: ["your repo"]
+    },
+    mui: {
+      title: "mui — the portable vocabulary",
+      owns: "The contract (29 names), the resolver (<code>Bind.all()</code>), the surface model (<code>@:surface</code>, roles, <code>@:hostedRoles</code>, the carry gate), the <code>Describe</code> register each backend signs, and <code>Follow.nodesOf</code>.",
+      never: "Names a backend — adding a seventh touches zero files here. Depends on a transport. Renders anything.",
+      repos: ["mui · public"]
+    },
+    backends: {
+      title: "The six backends",
+      owns: "Rendering the vocabulary with real widgets; hosting the roles the platform has; a <code>NodeSource</code> or <code>NodeSink</code> over its own views; a describer to canonical nodes; the platform sink behind <code>@:state</code>.",
+      never: "Knows about another backend. Depends on <code>dui</code> or <code>cafos</code> — a backend hosts <code>Companion</code> by installing a describer, never by importing a transport.",
+      repos: ["sui · public", "aui · public", "wui · public", "cui · public", "pui · private", "qui (haxe-sailfish) · private"]
+    },
+    dui: {
+      title: "dui — the halyard",
+      owns: "Where a surface goes: the transport contract, targets as observable state, pairings, reach, the snapshot wire, and the three adapters (cafos, wear, mui).",
+      never: "Knows a platform — Android lives in <code>kui-wear</code>, sockets in <code>cafos</code>. Sends a surface anywhere nobody named.",
+      repos: ["dui · private"]
+    },
+    nui: {
+      title: "nui — the node model",
+      owns: "What a node is; the pull and push contracts; the snapshot (project/inflate, the action table keyed by place); <code>Follow</code>; <code>SelfSource</code>.",
+      never: "Renders. Knows a platform, a view class, or a wire. Depends on anything but <code>rui</code>.",
+      repos: ["nui · public"]
+    },
+    rui: {
+      title: "rui — the reactive core",
+      owns: "Signals, effects, the scheduler and its batch, <code>State</code> with its platform and durable sinks, <code>Lifetime</code>, <code>ImmutableList</code>, and the view rule as a macro.",
+      never: "Knows what a view is. Renders. Depends on anything.",
+      repos: ["rui · public"]
+    },
+    kui: {
+      title: "kui — native capabilities",
+      owns: "The capability interface, per-platform resolution, and the native payload a build needs per toolchain (hxcpp, qmake, xcode, gradle, msbuild). kui-store and kui-wear are capabilities shipped as their own repositories.",
+      never: "Names a backend. Requires an application to remember a link line, a permission or a manifest entry — those travel with the capability.",
+      repos: ["kui · public", "kui-store · public", "kui-wear · private (not pushed yet)"]
+    },
+    cafos: {
+      title: "cafos — the network substrate",
+      owns: "Agents, discovery, links, the replicated registry of presence, Ed25519 identity and enrolment, per-surface policy, and the opaque relayed channel. Documented in French, with its own roadmap.",
+      never: "Parses a frame. Knows what a <code>nui.Node</code> is. Carries application state — only pictures cross the network.",
+      repos: ["cafos · private"]
+    }
+  };
+  var panel = document.getElementById('layer-panel');
+  var buttons = document.querySelectorAll('.layer');
+  function showLayer(key) {
+    var L = LAYERS[key];
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.layer === key ? 'true' : 'false'); });
+    panel.innerHTML = '<div class="eyebrow">Layer</div><h3>' + L.title + '</h3>' +
+      '<div class="owns"><strong>Owns.</strong> ' + L.owns + '</div>' +
+      '<div class="never"><strong>Never.</strong> ' + L.never + '</div>' +
+      '<div class="repos">' + L.repos.map(function (r) { return '<span class="tag' + (r.indexOf('private') >= 0 ? ' private' : (r.indexOf('public') >= 0 ? ' public' : '')) + '">' + r + '</span>'; }).join('') + '</div>';
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { showLayer(b.dataset.layer); }); });
+
+  // ---------- roles ----------
+  var ROLES = {
+    Primary: "The main window. Implicit — it is <code>body()</code> — and required everywhere. <code>@:surface(Primary)</code> is a compile error saying so.",
+    Glance: "A read-at-a-glance summary. On sui it is a WidgetKit widget in its own extension process; on aui an App Widget drawn by the launcher; on qui the Sailfish cover, mounted <em>live</em> as an effect rather than sampled. The two snapshot hosts follow their state through <code>nui.Follow</code> and share a durable store with the application so a tap in the widget runs against the real value.",
+    Preferences: "The platform's settings surface — the macOS Settings scene on sui. Nowhere else yet; a declaration on another backend needs <code>optional</code>.",
+    Commands: "Named commands: the menu bar on macOS (sui), a MenuBar on Windows (wui), key bindings on a terminal (cui). Declared as a command set rather than a tree — it has no picture to keep current.",
+    Auxiliary: "An additional top-level window, where the platform has windows: sui and wui.",
+    Companion: "A live panel on another device — a machine on the CAFOS network, or a paired watch — rendered there by that device's own renderer, its taps running your closures back home. Hosted by five backends: any of them can serve, and <code>aui</code> can also be the far side. Off until the build says <code>-D mui_carry</code>, and sent nowhere until something is paired.",
+    Notification: "A system notification. Declared for completeness; no declaration form yet — it needs the detached subsystem's serialized-state contract."
+  };
+  var rows = document.querySelectorAll('#matrix tr[data-role]');
+  var roleAnswer = document.getElementById('role-answer');
+  rows.forEach(function (tr) {
+    tr.setAttribute('tabindex', '0');
+    function pick() {
+      rows.forEach(function (r) { r.setAttribute('aria-selected', r === tr ? 'true' : 'false'); });
+      roleAnswer.innerHTML = '<p class="lib">' + tr.dataset.role + '</p><p>' + ROLES[tr.dataset.role] + '</p>';
+    }
+    tr.addEventListener('click', pick);
+    tr.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+  });
+
+  // ---------- tap walkthrough ----------
+  var WALK = {
+    local: [
+      { where: "Compose · aui", t: "The finger lands", p: "Compose's own <code>Button</code> fires <code>onClick</code>. It holds an opaque handle to the Haxe node — <code>java.lang.Object</code> — and asks the bridge to run its action." },
+      { where: "aui.nui.ViewSource", t: "One gesture, one render", p: "<code>invokeAction</code> opens <code>rui.Signal.Scheduler.batch</code>. Whatever the closure writes, each effect that reads it will run once, when the gesture is over." },
+      { where: "your closure", t: "Your code runs", p: "<code>count.set(count.get() + 1)</code>. Nothing about this line knows it was reached from Compose, a terminal, or a watch." },
+      { where: "rui.state.State", t: "The write, in two halves", p: "The <strong>platform sink</strong> is called immediately — <code>StateBridge.write</code> sets the Compose <code>MutableState</code> behind the cell. The <strong>effects</strong> that read the cell are queued, not run: the batch is still open." },
+      { where: "rui.Scheduler", t: "The batch closes", p: "Every queued effect runs once. If this app declares a snapshot surface — a widget, a Companion — its <code>nui.Follow</code> effect is one of them: it re-samples the tree and republishes." },
+      { where: "Compose", t: "Recomposition", p: "The composable that read <code>count</code> through the Compose state recomposes. Not the screen — that one node. This is what \"Compose follows the Haxe reads\" means." }
+    ],
+    remote: [
+      { where: "Compose · aui, on the watch", t: "The finger lands — on a foreign tree", p: "The watch is drawing a <code>nui</code> tree that <em>arrived</em>, through <code>nui.SelfSource</code> and <code>ViewNodeBridge.readThrough</code>. Compose does not know it is foreign. The button's action prop is an inflated closure holding an integer: the action id." },
+      { where: "dui.nui.Reception", t: "An id goes home", p: "The inflated closure sends <code>{action: 7}</code> back the way the frame came — here, a Data Layer message on <code>/dui/action</code>, wrapped with the surface name because one watch may carry several." },
+      { where: "kui-wear · phone", t: "Delivered, even if the app was not on screen", p: "The in-process listener takes it if the app is running; the manifest-declared <code>WearableListenerService</code> takes it otherwise, starting the process if needed. Both go through one <code>requestId</code> guard — delivered twice, a <code>+10</code> counted 20." },
+      { where: "dui.nui.Projection", t: "The id resolves against a table it never saw built", p: "<code>follower.invoke(7)</code>. Ids are keyed by <em>place</em>, and the table was never cleared between generations, so a tap that raced a fresh frame still runs the current closure of the button in that slot." },
+      { where: "your closure, on the phone", t: "Your code runs — where the state lives", p: "Inside a batch, exactly as a local tap. <code>count.set(count.get() + 10)</code>. The state never left the phone; the watch only ever held a picture." },
+      { where: "nui.Follow", t: "The write republishes", p: "The platform sink updates the phone's own screen immediately. When the batch closes, the follower's effect wakes — it read <code>count</code> while sampling — projects a new snapshot, and <code>Projection</code> sends <code>{gen: 15, tree}</code>." },
+      { where: "watch", t: "A new picture", p: "<code>Reception.frame</code> inflates it, <code>SelfSource.rebuild</code> swaps the tree, and a <code>@:state</code> generation cell the thunk reads is bumped — because Compose only recomposes on a cell it saw read. The number changes." }
+    ]
+  };
+  var mode = 'local', idx = 0;
+  var stepsEl = document.getElementById('steps'), posEl = document.getElementById('pos');
+  function render() {
+    var S = WALK[mode];
+    stepsEl.innerHTML = S.map(function (s, i) {
+      return '<div class="step' + (i === idx ? ' on' : (i < idx ? ' done' : '')) + '"><div class="k">' + (i + 1) + '</div><div><div class="where">' + s.where + '</div><div class="t">' + s.t + '</div><p>' + s.p + '</p></div></div>';
+    }).join('');
+    posEl.textContent = (idx + 1) + ' / ' + S.length;
+    document.getElementById('prev').disabled = idx === 0;
+    document.getElementById('next').disabled = idx === S.length - 1;
+  }
+  document.querySelectorAll('#walk .mode .btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      mode = b.dataset.mode; idx = 0;
+      document.querySelectorAll('#walk .mode .btn').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      render();
+    });
+  });
+  document.getElementById('next').addEventListener('click', function () { if (idx < WALK[mode].length - 1) { idx++; render(); } });
+  document.getElementById('prev').addEventListener('click', function () { if (idx > 0) { idx--; render(); } });
+  document.getElementById('reset').addEventListener('click', function () { idx = 0; render(); });
+  render();
+
+  // ---------- where does my code go ----------
+  var WHERE = [
+    { q: "Add a view to the shared vocabulary", lib: "mui.Contract, then every backend", a: "Add the entry to <code>mui.Contract.BINDINGS</code>; each backend provides <code>&lt;backend&gt;.mui.YourView</code>; <code>Bind.all()</code> refuses a build against a backend that has not. <code>mui</code> itself never names a backend." },
+    { q: "Reach a native API (camera, battery, a watch)", lib: "kui — a capability", a: "An interface naming no platform, one implementation per <code>p.platform.&lt;id&gt;</code> with a <code>@:kuiNative</code> payload for each toolchain. Applications call <code>kui.Kui.get</code> and handle <code>null</code>. Never inside a backend: the same camera would get written six times." },
+    { q: "Make a widget or a cover show a value", lib: "declare a @:surface(Glance)", a: "Read <code>@:state</code> in it; <code>nui.Follow</code> keeps it current, and the durable store shares the value with the widget's process. Nothing to call. If the build's backend has no host, say <code>optional</code> or stop." },
+    { q: "Put a panel on another device", lib: "@:surface(Companion) + dui", a: "Three acts: <code>-D mui_carry</code>, <code>dui.mui.CompanionServe.serve(app, fabric, pairings)</code>, and a pairing chosen by a person from <code>fabric.targets(sid).list</code>. Pick the transport: <code>dui.cafos</code> for machines, <code>dui.wear</code> for a watch." },
+    { q: "Support a new transport (a car, a TV)", lib: "dui — implement Transport", a: "<code>targets(sid)</code>, <code>open(target, sid)</code>, <code>start</code>/<code>close</code>, and a <code>Channel</code> with <code>attached</code> answered honestly. Platform glue goes in a <code>kui</code> capability. Nothing in <code>dui.nui</code> changes: it keeps sending the same frames." },
+    { q: "Add a platform (a seventh backend)", lib: "a new library, not mui", a: "Provide the contract under <code>&lt;backend&gt;.mui.*</code>, sign <code>Describe.impl</code>, state <code>@:hostedRoles</code>, implement <code>NodeSource</code> or <code>NodeSink</code> over your views, and back <code>@:state</code> with a platform sink. Zero files change in <code>mui</code>." },
+    { q: "Change when effects run", lib: "rui.Signal.Scheduler", a: "Synchrony is a tested contract two backends depend on. Coalescing belongs in a <code>batch</code> at the point a gesture arrives — each backend's <code>invokeAction</code> already opens one. State sinks are never delayed." },
+    { q: "Change how machines find each other", lib: "cafos", a: "Discovery, links, registry, identity and policy live there, documented in French. It must not learn what a <code>Node</code> is; if a change seems to need that, the change belongs in <code>dui</code>." },
+    { q: "Persist a value across processes on one device", lib: "@:state(durable) → kui-store", a: "Declare the cell durable; <code>rui.state.Durable</code> binds it to the device store with compare-and-set. Never across a network — <code>dui</code> carries pictures, not state." },
+    { q: "Draw a tree that arrived as data", lib: "nui.SelfSource", a: "Inflate the snapshot, wrap it in a <code>SelfSource</code>, hand it to the backend's renderer — <code>aui</code> takes it through <code>ViewNodeBridge.readThrough</code>. No conversion to the backend's views: that is a second name table waiting to drift." }
+  ];
+  var wq = document.getElementById('where-q'), wa = document.getElementById('where-a');
+  WHERE.forEach(function (w, i) {
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = w.q; b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () {
+      wq.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      wa.innerHTML = '<p class="lib">' + w.lib + '</p><p>' + w.a + '</p>';
+    });
+    wq.appendChild(b);
+  });
+
+  // ---------- toc highlighting ----------
+  var links = document.querySelectorAll('#toc a[href^="#"]');
+  var targets = Array.prototype.map.call(links, function (a) { return document.getElementById(a.getAttribute('href').slice(1)); });
+  function markCurrent() {
+    var y = window.scrollY + 120, cur = 0;
+    targets.forEach(function (t, i) { if (t && t.offsetTop <= y) cur = i; });
+    links.forEach(function (a, i) { a.setAttribute('aria-current', i === cur ? 'true' : 'false'); });
+  }
+  window.addEventListener('scroll', markCurrent, { passive: true });
+  markCurrent();
+})();
+</script>
