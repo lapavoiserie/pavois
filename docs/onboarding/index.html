@@ -103,8 +103,6 @@
   .main { padding: 2.4rem clamp(1.2rem, 5vw, 4rem) 6rem; }
   .content { max-width: 880px; }
   .hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.6rem; margin-bottom: 1.5rem; }
-  .flags { display: inline-flex; gap: 4px; vertical-align: middle; }
-  .flags svg { width: 18px; height: 18px; }
   .toolbar { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: 1rem 0; }
   @media (max-width: 860px) {
     .shell { grid-template-columns: 1fr; }
@@ -174,12 +172,7 @@
 <div class="shell">
   <aside class="rail" aria-label="Table of contents">
     <div class="brand">
-      <span class="flags" aria-hidden="true">
-        <svg viewBox="0 0 10 10"><rect width="10" height="10" fill="#1F4FA3"/><rect x="2.5" y="2.5" width="5" height="5" fill="#F7F4EC"/></svg>
-        <svg viewBox="0 0 10 10"><rect width="10" height="10" fill="#F7F4EC"/><rect width="5" height="10" fill="#1F4FA3"/></svg>
-        <svg viewBox="0 0 10 10"><rect width="10" height="10" fill="#C8102E"/><rect x="0" y="4" width="10" height="2" fill="#1F4FA3"/></svg>
-      </span>
-      Pavois
+            Pavois
     </div>
     <nav id="toc">
       <a href="#story"><span class="n">00</span>The idea</a>
