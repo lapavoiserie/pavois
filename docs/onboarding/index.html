@@ -292,7 +292,7 @@ count.set(1);      <span class="cm">// prints nothing: unchanged</span>
 count.peek();      <span class="cm">// untracked read — inside an effect, no subscription</span></code></pre>
 
     <h3>State: a signal with a platform half</h3>
-    <p><code>rui.state.State&lt;T&gt;</code> is what every backend's <code>@:state</code> is built on. It adds the two things a UI library needs beyond a signal:</p>
+    <p><code>rui.state.State&lt;T&gt;</code> is what every backend's <code>@:state</code> is built on — one field, one value, one object: this document calls that object a <strong>cell</strong>. It adds the two things a UI library needs beyond a signal:</p>
     <ul>
       <li>a <strong>platform sink</strong> — the native mirror: a Compose <code>MutableState</code>, a Swift <code>AppState</code>, a Qt property. Called <em>directly</em> on an application write, never through the scheduler, so a screen mirrored by a sink updates on the write whatever else is going on;</li>
       <li>a <strong>durable sink</strong> — for a cell declared <code>@:state(durable)</code>, a write-through to a device-local store shared with the application's own detached surfaces (a widget, an extension). Compare-and-set, per key, because two processes may write.</li>
@@ -466,6 +466,7 @@ haxelib dev aui ~/new-projects/aui        <span class="cm"># and sui, cui, wui, 
 
     <h2 id="glossary">14 · Glossary</h2>
     <dl class="gloss">
+      <dt>cell</dt><dd>One <code>@:state</code> field, holding one value: a <code>rui.state.State&lt;T&gt;</code> — a signal with <code>get</code>/<code>set</code>/<code>peek</code>, a platform sink and optionally a durable sink. The unit a view subscribes to, a write notifies, and a durable key persists. Not a record, not a variable, not a node.</dd>
       <dt>surface</dt><dd>One thing an application can put on screen, declared by role. The main window is one; a cover, a menu, a panel on another machine are others.</dd>
       <dt>role</dt><dd>What a surface is for — Primary, Glance, Preferences, Commands, Auxiliary, Companion, Notification — never the native surface's name.</dd>
       <dt>live / snapshot</dt><dd>A live surface is an effect that reconciles; a snapshot surface is a picture somebody else draws when they decide, kept current by <code>nui.Follow</code>.</dd>
